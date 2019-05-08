@@ -4,10 +4,6 @@ require "json"
 
 #I need to pass name into all the methods or set as global variable
 
-#change .new to create with a empty fav word array
-#change the empty array to say that there isnt any fav words yet
-
-
 def mta_hello
   puts "Hello, welcome to the Millenial Translation Service.  Please enter your name"
 
@@ -40,9 +36,13 @@ def mta_step_one(name) #This is the 'main menu' the screen to return
     when "2"
       # find and return favorite word list for user
       puts "Here is a list of your favorite saved words"
-      binding.pry
-      # User_Favorite.user_fav_list(name)
-      # create a method that seaches the user_words table and returns the saved words
+
+      user_id = User.find_by(user_name: name).id
+      user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns all that are for the user_id
+
+      puts user_favorites
+
+      mta_step_one(name)
 
     when "3"
       # exit
@@ -72,17 +72,27 @@ def mta_step_two(word, name)
     when "2"
       # find and return favorite word list for user
       puts "Here is a list of your favorite saved words"
-      binding.pry
-      mta_step_two(word, name)
-      # User_Favorite.user_fav_list(name)
-      # create a method that seaches the user_words table and returns the saved words
-      # User_Favorite.new_favorite
+
+      user_id = User.find_by(user_name: name).id
+      user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns ll that are for the user_id
+
+      puts user_favorites
+
+      mta_step_one(name)
 
     when "3"  #add the word to the favorites table and return the favorites
       puts "Adding #{word} to your favorites"
       sleep 1 #wait 1 second
-      binding.pry
-      # User_Favorite.new_favorite(word, name)
+
+      user_id = User.find_by(user_name: name).id
+      word_id = Word.find_by(word: word).id
+      word = Word.find_by(word: word).word
+
+      Favorite.create(favorite_word: word, user_id: user_id, word_id: word_id)
+
+      puts "Word added to your favorites!"
+
+      mta_step_one(name)
 
     when "4"
       # exit
