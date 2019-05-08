@@ -9,12 +9,13 @@ ActiveRecord::Base.establish_connection({
 })
 
 
-binding.pry
-# mta_hello
+# binding.pry
+Word.create(word: "fam", definition: "family")
+mta_hello
 #
 # User.create(user_name: "Joe")
 #
-# Word.create(word: "Lit", definition: "Very Good")
+#
 # Favorite.all
 # Favorite.create(favorite_word: "Lit")
 
@@ -22,4 +23,4 @@ binding.pry
 # Word.find_by(word: "Lit")
 # Word.find_by(word: "Lit").id
 # Word.find_by(word: "Lit").word
-# Favorite.create(favorite_word: Word.find_by(word: "Lit").word, user_id: User.find_by(user_name: "Joe").id, word_id:  Word.find_by(word: "Lit").id)    
+# Favorite.create(favorite_word: Word.find_by(word: "Lit").word, user_id: User.find_by(user_name: "Joe").id, word_id:  Word.find_by(word: "Lit").id)
