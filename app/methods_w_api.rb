@@ -5,7 +5,7 @@ require "json"
 #I need to pass name into all the methods or set as global variable
 
 def mta_hello
-  puts "Hello! Welcome to the Millenial Translation Service. Please enter your name."
+  puts "Hello! Welcome to the Millennial Translation Service. Please enter your name."
 
   name = gets.chomp
   # take the name and search to see if they have an account
