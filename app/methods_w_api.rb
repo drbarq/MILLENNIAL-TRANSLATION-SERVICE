@@ -90,7 +90,7 @@ def mta_step_two(word, name)
 
       Favorite.create(favorite_word: word, user_id: user_id, word_id: word_id)
 
-      puts "#{word} was added to your favorites." ##Interpolate word?
+      puts "'#{word}' was added to your favorites." ##Interpolate word?
 
       mta_step_one(name)
 
@@ -113,7 +113,7 @@ def word_search(word, name)                        #Search the words DB for the 
                                                    #IF nothing is returned ask them to try again
 
   if Word.exists?(word: word)                      #check the db first
-    puts "'#{word}' means #{Word.find_by(word: word).definition}"
+    puts "'#{word}' means #{Word.find_by(word: word).definition}."
     mta_step_two(word, name)
 
   elsif GetData.get_word_definition(word)["list"]  #IF not in DB call the API,
