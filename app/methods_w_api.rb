@@ -161,27 +161,3 @@ def new_user_orientation(name)
   end
 
 end
-
-
-
-# APi method
-
-# def get_api_scrape(word)
-#
-#   url = "https://mashape-community-urban-dictionary.p.rapidapi.com/define?term="  #basic URI for the API endpoint
-#
-#   @@data = RestClient::Request.execute(method: :get, url: url+word,               #api request for the data
-#   headers:{
-#     "X-RapidAPI-Host" => "mashape-community-urban-dictionary.p.rapidapi.com",
-#     "X-RapidAPI-Key" => "c78a9f92ccmshd2c7b8729d31c74p182394jsnceaa306eed5d"
-#   })
-#
-#   @@response = JSON.parse(@@data)
-#
-# binding.pry
-#
-# definition = @@response["list"][0]["definition"]
-# #return 1 or 10?
-# # https://rapidapi.com/community/api/urban-dictionary
-#
-# end
