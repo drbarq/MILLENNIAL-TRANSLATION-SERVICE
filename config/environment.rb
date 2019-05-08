@@ -10,7 +10,7 @@ ActiveRecord::Base.establish_connection({
 
 
 # binding.pry
-Word.create(word: "fam", definition: "family")
+# Word.create(word: "fam", definition: "family")
 mta_hello
 #
 # User.create(user_name: "Joe")
