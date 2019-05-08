@@ -66,15 +66,15 @@ def mta_step_two(word, name)
     when "1" #Chomp returns a string!!!
       # new word search
       puts "Please enter a word to search."
-      word = gets.chomp  #make everything lowercase to avoid search issues ?
-      word_search(word, name) #method that searches the dictionary
+      word = gets.chomp                                           #make everything lowercase to avoid search issues ?
+      word_search(word, name)                                     #method that searches the dictionary
 
     when "2"
       # find and return favorite word list for user
       puts "Here is a list of your favorite words."
 
       user_id = User.find_by(user_name: name).id
-      user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns ll that are for the user_id
+      user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns all that are for the user_id
 
       puts user_favorites
 
@@ -90,7 +90,7 @@ def mta_step_two(word, name)
 
       Favorite.create(favorite_word: word, user_id: user_id, word_id: word_id)
 
-      puts "Word was added to your favorites." ##Interpolate word?
+      puts "#{word} was added to your favorites." ##Interpolate word?
 
       mta_step_one(name)
 
@@ -106,7 +106,6 @@ def mta_step_two(word, name)
 end
 
 
-#updated per ActiveRecord
 def word_search(word, name)                        #Search the words DB for the word definition.
                                                    #IF the word isn't in the words db then call the API
                                                    #IF the API returns something, store that word in the words DB
@@ -148,7 +147,7 @@ def new_user_orientation(name)
     when "1"    #Chomp returns a string!!!
       # new word search
       puts "Please enter a word to search."
-      word = gets.chomp  #make everything lowercase to avoid search issues ?
+      word = gets.chomp                                               #make everything lowercase to avoid search issues ?
       word_search(word, name) #method that searches the dictionary
 
     when "2"
@@ -161,27 +160,3 @@ def new_user_orientation(name)
   end
 
 end
-
-
-
-# APi method
-
-# def get_api_scrape(word)
-#
-#   url = "https://mashape-community-urban-dictionary.p.rapidapi.com/define?term="  #basic URI for the API endpoint
-#
-#   @@data = RestClient::Request.execute(method: :get, url: url+word,               #api request for the data
-#   headers:{
-#     "X-RapidAPI-Host" => "mashape-community-urban-dictionary.p.rapidapi.com",
-#     "X-RapidAPI-Key" => "c78a9f92ccmshd2c7b8729d31c74p182394jsnceaa306eed5d"
-#   })
-#
-#   @@response = JSON.parse(@@data)
-#
-# binding.pry
-#
-# definition = @@response["list"][0]["definition"]
-# #return 1 or 10?
-# # https://rapidapi.com/community/api/urban-dictionary
-#
-# end
