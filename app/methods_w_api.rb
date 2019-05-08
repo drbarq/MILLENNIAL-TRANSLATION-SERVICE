@@ -5,23 +5,23 @@ require "json"
 #I need to pass name into all the methods or set as global variable
 
 def mta_hello
-  puts "Hello, welcome to the Millenial Translation Service.  Please enter your name"
+  puts "Hello! Welcome to the Millenial Translation Service. Please enter your name."
 
   name = gets.chomp
   # take the name and search to see if they have an account
   if User.exists?(user_name: name) #if returning user, display options, User.find_user returns the object if found
-    puts "Welcome back #{name}"
+    puts "Welcome back, #{name}!"
     mta_step_one(name)
   else  #if the user is new, create a new user
-    puts "This is the first time we have seen you #{name}, let's show you around"
+    puts "This is the first time we have seen you, #{name}. Let's show you around."
     User.create(user_name: name)
     new_user_orientation(name)
   end
 end
 
 def mta_step_one(name) #This is the 'main menu' the screen to return
-  puts "1 - Search for new word"
-  puts "2 - Show favorite words"
+  puts "1 - Search for a new word"
+  puts "2 - Display your favorite words"
   puts "3 - Exit"
 
   select = gets.chomp
@@ -29,13 +29,13 @@ def mta_step_one(name) #This is the 'main menu' the screen to return
   case select
     when "1"    #Chomp returns a string!!!
       # new word search
-      puts "Please enter word to search"
+      puts "Please enter a word to search."
       word = gets.chomp                                   #make everything lowercase to avoid search issues ?
       word_search(word, name)                             #hits word_search to search the words db and api
 
     when "2"
       # find and return favorite word list for user
-      puts "Here is a list of your favorite saved words"
+      puts "Here is a list of your favorite words."
 
       user_id = User.find_by(user_name: name).id
       user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns all that are for the user_id
@@ -46,18 +46,18 @@ def mta_step_one(name) #This is the 'main menu' the screen to return
 
     when "3"
       # exit
-      puts "Y'all come back now ya hear!!!"
+      puts "Y'all come back now, ya hear?!"
 
     else
-      puts "Sorry I didn't get that, Can you try again?"
+      puts "Sorry, we didn't get that. Please try again."
       mta_step_one(name)
     end
 end
 
 def mta_step_two(word, name)
-  puts "1 - Search for new word"
-  puts "2 - Show favorite words"
-  puts "3 - Add #{word} to favorite words"
+  puts "1 - Search for a new word"
+  puts "2 - Display your favorite words"
+  puts "3 - Add '#{word}' to your favorite words"
   puts "4 - Exit"
 
   select = gets.chomp
@@ -65,13 +65,13 @@ def mta_step_two(word, name)
   case select
     when "1" #Chomp returns a string!!!
       # new word search
-      puts "Please enter word to search"
+      puts "Please enter a word to search."
       word = gets.chomp  #make everything lowercase to avoid search issues ?
       word_search(word, name) #method that searches the dictionary
 
     when "2"
       # find and return favorite word list for user
-      puts "Here is a list of your favorite saved words"
+      puts "Here is a list of your favorite words."
 
       user_id = User.find_by(user_name: name).id
       user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns ll that are for the user_id
@@ -81,7 +81,7 @@ def mta_step_two(word, name)
       mta_step_one(name)
 
     when "3"  #add the word to the favorites table and return the favorites
-      puts "Adding #{word} to your favorites"
+      puts "Adding '#{word}' to your favorites."
       sleep 1 #wait 1 second
 
       user_id = User.find_by(user_name: name).id
@@ -90,16 +90,16 @@ def mta_step_two(word, name)
 
       Favorite.create(favorite_word: word, user_id: user_id, word_id: word_id)
 
-      puts "Word added to your favorites!"
+      puts "Word was added to your favorites." ##Interpolate word?
 
       mta_step_one(name)
 
     when "4"
       # exit
-      puts "Y'all come back now ya hear!!!"
+      puts "Y'all come back now, ya hear?!"
 
     else
-      puts "Sorry I didn't get that, Can you try again?"
+      puts "Sorry, we didn't get that. Please try again."
       mta_step_two(word, name)
     end
 
@@ -114,7 +114,7 @@ def word_search(word, name)                        #Search the words DB for the 
                                                    #IF nothing is returned ask them to try again
 
   if Word.exists?(word: word)                      #check the db first
-    puts "#{word} means #{Word.find_by(word: word).definition}"
+    puts "'#{word}' means #{Word.find_by(word: word).definition}"
     mta_step_two(word, name)
 
   elsif GetData.get_word_definition(word)["list"]  #IF not in DB call the API,
@@ -126,20 +126,20 @@ def word_search(word, name)                        #Search the words DB for the 
     puts "#{word}: #{definition}"                  #return the word and def to the user
     mta_step_two(word, name)
   else
-    puts "I dont seem to know that one either. Sorry"
+    puts "We dont seem to know that one. Sorry!"
     mta_step_one(word, name)
   end
 end
 
 #only used once, when a new user uses it for the fist time
 def new_user_orientation(name)
-  puts "This is a text dictionary with simple commands"
-  puts "When selecting commands input the command number"
-  puts "When searching for a word limit to just the word"
-  puts "Now that we have you signed up we can keep track"
-  puts "of your favorite words.  (limit 10 words)"
+  puts "This is a text dictionary with simple commands."
+  puts "To execute a command, input the command number."
+  puts "When searching for a word, limit your input to just the word."
+  puts "Now that you're signed up, we can keep track"
+  puts "of your favorite words. (limit 5 words)"
 
-  puts "1 - Search for new word"
+  puts "1 - Search for a new word"
   puts "2 - Exit"
 
   select = gets.chomp
@@ -147,16 +147,16 @@ def new_user_orientation(name)
   case select
     when "1"    #Chomp returns a string!!!
       # new word search
-      puts "Please enter word to search"
+      puts "Please enter a word to search."
       word = gets.chomp  #make everything lowercase to avoid search issues ?
       word_search(word, name) #method that searches the dictionary
 
     when "2"
       # exit
-      puts "Y'all come back now ya hear!!!"
+      puts "Y'all come back now, ya hear?!"
 
     else
-      puts "Sorry I didn't get that, Can you try again?"
+      puts "Sorry, we didn't get that. Please try again."
       new_user_orientation(name)
   end
 
