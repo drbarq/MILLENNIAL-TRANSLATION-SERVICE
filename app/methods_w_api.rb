@@ -87,8 +87,15 @@ def mta_step_two(word, name)
     when "3"  #add the word to the favorites table and return the favorites
       puts "Adding #{word} to your favorites"
       sleep 1 #wait 1 second
-      binding.pry
-      # User_Favorite.new_favorite(word, name)
+
+      user_id = User.find_by(user_name: name).id
+      word_id = Word.find_by(word: word).id
+
+      Favorite.create(user_id: user_id, word_id: word_id)
+
+      puts "Word added to your favorites!"
+
+      mta_step_two(word, name)
 
     when "4"
       # exit
