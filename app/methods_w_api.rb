@@ -40,25 +40,13 @@ def mta_step_one(name) #This is the 'main menu' the screen to return
     when "2"
       # find and return favorite word list for user
       puts "Here is a list of your favorite saved words"
-      user_id = User.find_by(user_name: name).id
 
-      user_favorites = Favorite.find_by(user_id: user_id).favorite_word
+      user_id = User.find_by(user_name: name).id
+      user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns ll that are for the user_id
 
       puts user_favorites
 
-      binding.pry
-
-      user_favorites
-
-      #SQL is limiting to 1
-
-        # user_favorites.each do |favorite|
-        #   binding.pry
-        #   favorite.favorite_word
-        # end
-
-      # User_Favorite.user_fav_list(name)
-      # create a method that seaches the user_words table and returns the saved words
+      mta_step_one(name)
 
     when "3"
       # exit
@@ -88,11 +76,13 @@ def mta_step_two(word, name)
     when "2"
       # find and return favorite word list for user
       puts "Here is a list of your favorite saved words"
-      binding.pry
+
+      user_id = User.find_by(user_name: name).id
+      user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns ll that are for the user_id
+
+      puts user_favorites
+
       mta_step_two(word, name)
-      # User_Favorite.user_fav_list(name)
-      # create a method that seaches the user_words table and returns the saved words
-      # User_Favorite.new_favorite
 
     when "3"  #add the word to the favorites table and return the favorites
       puts "Adding #{word} to your favorites"
