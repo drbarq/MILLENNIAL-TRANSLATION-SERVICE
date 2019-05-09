@@ -9,7 +9,7 @@ The application requires a text editor with ruby functionality and the necessary
 The gems can be installed by running ‘bundle install’ in your terminal.
 
 The application also requires an API key which can be generated from https://rapidapi.com/community/api/urban-dictionary.
-API Key is placed within getdata.rb replacing the XX "X-RapidAPI-Key" => "XX"
+API Key is placed within getdata.rb replacing the ```XX "X-RapidAPI-Key" => "XX"```
 
 
 ## USAGE
