@@ -30,12 +30,12 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ![alt text](https://i.imgur.com/VNchlNI.png)
 
-[Imgur](https://i.imgur.com/RBg5pKZ.png)
+![alt text](https://i.imgur.com/RBg5pKZ.png)
 
-[Imgur](https://i.imgur.com/vjxZmBJ.png)
+![alt text](https://i.imgur.com/vjxZmBJ.png)
 
-[Imgur](https://i.imgur.com/KWONvbm.png)
+![alt text](https://i.imgur.com/KWONvbm.png)
 
-[Imgur](https://i.imgur.com/QwYW79G.png)
+![alt text](https://i.imgur.com/QwYW79G.png)
 
 
