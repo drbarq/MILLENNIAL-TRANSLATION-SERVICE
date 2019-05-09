@@ -11,4 +11,4 @@ ActiveRecord::Base.establish_connection({
 })
 
 #code starts here
-mta_hello
+mts_hello

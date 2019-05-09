@@ -4,22 +4,22 @@ require "json"
 
 #I need to pass name into all the methods or set as global variable
 
-def mta_hello
+def mts_hello
   puts "Hello! Welcome to the Millennial Translation Service. Please enter your name."
 
   name = gets.chomp
   # take the name and search to see if they have an account
   if User.exists?(user_name: name) #if returning user, display options, User.find_user returns the object if found
-    puts "Welcome back, #{name}!"
-    mta_step_one(name)
+    puts "Welcome back, #{name.capitalize}!"
+    mts_step_one(name)
   else  #if the user is new, create a new user
-    puts "This is the first time we have seen you, #{name}. Let's show you around."
+    puts "This is the first time we have seen you, #{name.capitalize}. Let's show you around."
     User.create(user_name: name)
     new_user_orientation(name)
   end
 end
 
-def mta_step_one(name) #This is the 'main menu' the screen to return
+def mts_step_one(name) #This is the 'main menu' the screen to return
   puts "1 - Search for a new word"
   puts "2 - Display your favorite words"
   puts "3 - Exit"
@@ -40,9 +40,9 @@ def mta_step_one(name) #This is the 'main menu' the screen to return
       user_id = User.find_by(user_name: name).id
       user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns all that are for the user_id
 
-      puts user_favorites
+      puts user_favorites.last(5)
 
-      mta_step_one(name)
+      mts_step_one(name)
 
     when "3"
       # exit
@@ -50,11 +50,11 @@ def mta_step_one(name) #This is the 'main menu' the screen to return
 
     else
       puts "Sorry, we didn't get that. Please try again."
-      mta_step_one(name)
+      mts_step_one(name)
     end
 end
 
-def mta_step_two(word, name)
+def mts_step_two(word, name)
   puts "1 - Search for a new word"
   puts "2 - Display your favorite words"
   puts "3 - Add '#{word}' to your favorite words"
@@ -71,14 +71,14 @@ def mta_step_two(word, name)
 
     when "2"
       # find and return favorite word list for user
-      puts "Here is a list of your favorite words."
+      puts "Here is a list of your favorite words." #NO fav words? puts you have none.
 
       user_id = User.find_by(user_name: name).id
       user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns all that are for the user_id
 
-      puts user_favorites
+      puts user_favorites.last(5)
 
-      mta_step_one(name)
+      mts_step_one(name)
 
     when "3"  #add the word to the favorites table and return the favorites
       puts "Adding '#{word}' to your favorites."
@@ -90,9 +90,9 @@ def mta_step_two(word, name)
 
       Favorite.create(favorite_word: word, user_id: user_id, word_id: word_id)
 
-      puts "'#{word}' was added to your favorites." ##Interpolate word?
+      puts "'#{word}' was added to your favorites."
 
-      mta_step_one(name)
+      mts_step_one(name)
 
     when "4"
       # exit
@@ -100,7 +100,7 @@ def mta_step_two(word, name)
 
     else
       puts "Sorry, we didn't get that. Please try again."
-      mta_step_two(word, name)
+      mts_step_two(word, name)
     end
 
 end
@@ -113,20 +113,20 @@ def word_search(word, name)                        #Search the words DB for the 
                                                    #IF nothing is returned ask them to try again
 
   if Word.exists?(word: word)                      #check the db first
-    puts "'#{word}' means #{Word.find_by(word: word).definition}."
-    mta_step_two(word, name)
+    puts "'#{word.capitalize}' means #{Word.find_by(word: word).definition}."
+    mts_step_two(word, name)
 
   elsif GetData.get_word_definition(word)["list"]  #IF not in DB call the API,
                                                    #if it is found, add the word to the words DB and return the definition
     word = GetData.word(word)                      # - the word the API found
-    definition = GetData.definition(word)          # - the definition the API found
-                                                   # **** I think the word variable is overwritten at this point with the returned word that will be passed to MTA_two
+    definition = GetData.definition(word).delete('[]')          # - the definition the API found
+                                                   # **** I think the word variable is overwritten at this point with the returned word that will be passed to mts_two
     Word.create(word: word, definition: definition)#create a new word object
     puts "#{word}: #{definition}"                  #return the word and def to the user
-    mta_step_two(word, name)
+    mts_step_two(word, name)
   else
     puts "We dont seem to know that one. Sorry!"
-    mta_step_one(word, name)
+    mts_step_one(word, name)
   end
 end
 
