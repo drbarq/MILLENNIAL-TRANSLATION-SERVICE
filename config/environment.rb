@@ -10,6 +10,6 @@ ActiveRecord::Base.establish_connection({
  :database => "./db/millenial_translator.db"
 })
 
-
+binding.pry
 #code starts here
 mts_hello
