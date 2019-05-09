@@ -3,32 +3,32 @@ require "rest-client"
 require "json"
 require "colorize"
 
-#I need to pass name into all the methods or set as global variable
+# name is passed into every method
 
 def mts_hello
   puts "Hello! Welcome to the Millennial Translation Service. Please enter your name.".colorize(:light_green)
 
   name = gets.chomp.capitalize
   # take the name and search to see if they have an account
-  if User.exists?(user_name: name) #if returning user, display options, User.find_user returns the object if found
+  if User.exists?(user_name: name) # if returning user, display options, User.find_user returns the object if found
     puts "Welcome back, #{name.capitalize}!".colorize(:light_green)
     mts_step_one(name)
-  else  #if the user is new, create a new user
+  else  # if the user is new, create a new user
     puts "This is the first time we have seen you, #{name.capitalize.underline}. Let's show you around.".colorize(:light_green)
     User.create(user_name: name)
     new_user_orientation(name)
   end
 end
 
-def mts_step_one(name) #This is the 'main menu' the screen to return
-  puts "1 - Search for a new word".colorize(:light_blue)
-  puts "2 - Display your favorite words".colorize(:light_blue)
+def mts_step_one(name) # This is the 'main menu' the screen to return
+  puts "1 - Search for a new word".colorize(:light_cyan)
+  puts "2 - Display your favorite words".colorize(:light_cyan)
   puts "3 - Exit".colorize(:red)
 
   select = gets.chomp
 
   case select
-    when "1"    #Chomp returns a string!!!
+    when "1"    # Chomp returns a string!!!
       # new word search
       puts "Please enter a word to search.".colorize(:light_green)
       word = gets.chomp                               #make everything lowercase to avoid search issues ?
@@ -39,7 +39,7 @@ def mts_step_one(name) #This is the 'main menu' the screen to return
       puts "Here is a list of your favorite words.".colorize(:light_green)
 
       user_id = User.find_by(user_name: name).id
-      user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns all that are for the user_id
+      user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   # returns all that are for the user_id
 
       puts user_favorites.last(5)
 
@@ -56,34 +56,34 @@ def mts_step_one(name) #This is the 'main menu' the screen to return
 end
 
 def mts_step_two(word, name)
-  puts "1 - Search for a new word".colorize(:light_blue)
-  puts "2 - Display your favorite words".colorize(:light_blue)
-  puts "3 - Add '#{word}' to your favorite words".colorize(:light_blue)
+  puts "1 - Search for a new word".colorize(:light_cyan)
+  puts "2 - Display your favorite words".colorize(:light_cyan)
+  puts "3 - Add '#{word}' to your favorite words".colorize(:light_cyan)
   puts "4 - Exit".colorize(:red)
 
   select = gets.chomp
 
   case select
-    when "1" #Chomp returns a string!!!
+    when "1" # Chomp returns a string!!!
       # new word search
       puts "Please enter a word to search.".colorize(:light_green)
-      word = gets.chomp                                           #make everything lowercase to avoid search issues ?
-      word_search(word, name)                                     #method that searches the dictionary
+      word = gets.chomp
+      word_search(word, name)                                     # method that searches the dictionary
 
     when "2"
       # find and return favorite word list for user
-      puts "Here is a list of your favorite words.".colorize(:light_green) #NO fav words? puts you have none.
+      puts "Here is a list of your favorite words.".colorize(:light_green)
 
       user_id = User.find_by(user_name: name).id
-      user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   #returns all that are for the user_id
+      user_favorites = Favorite.where(user_id: user_id).pluck(:favorite_word)   # returns all that are for the user_id
 
       puts user_favorites.last(5)
 
       mts_step_one(name)
 
-    when "3"  #add the word to the favorites table and return the favorites
+    when "3"  # add the word to the favorites table and return the favorites
       puts "Adding '#{word}' to your favorites.".colorize(:light_green)
-      sleep 1 #wait 1 second
+      sleep 1 # wait 1 second
 
       user_id = User.find_by(user_name: name).id
       word_id = Word.find_by(word: word).id
@@ -107,31 +107,31 @@ def mts_step_two(word, name)
 end
 
 
-def word_search(word, name)                        #Search the words DB for the word definition.
-                                                   #IF the word isn't in the words db then call the API
-                                                   #IF the API returns something, store that word in the words DB
-                                                   #Return the definition to the user
-                                                   #IF nothing is returned ask them to try again
+def word_search(word, name)                        # Search the words DB for the word definition.
+                                                   # If the word isn't in the words db then call the API
+                                                   # If the API returns something, store that word in the words DB
+                                                   # Return the definition to the user
+                                                   # If nothing is returned ask them to try again
 
-  if Word.exists?(word: word)                      #check the db first
+  if Word.exists?(word: word)                      # check the db first
     puts "'#{word.capitalize}' means #{Word.find_by(word: word).definition}."
     mts_step_two(word, name)
 
-  elsif GetData.get_word_definition(word)["list"]  #IF not in DB call the API,
-                                                   #if it is found, add the word to the words DB and return the definition
+  elsif GetData.get_word_definition(word)["list"]  # If not in DB call the API,
+                                                   # if it is found, add the word to the words DB and return the definition
     word = GetData.word(word)                      # - the word the API found
     definition = GetData.definition(word).delete('[]')          # - the definition the API found
                                                    # **** I think the word variable is overwritten at this point with the returned word that will be passed to mts_two
-    Word.create(word: word, definition: definition)#create a new word object
-    puts "#{word}: #{definition.delete('[]')}"                  #return the word and def to the user
+    Word.create(word: word, definition: definition)# create a new word object
+    puts "#{word}: #{definition.delete('[]')}"                  # return the word and def to the user
     mts_step_two(word, name)
   else
-    puts "We dont recognize that one. Sorry!".colorize(:light_green)
+    puts "We don't recognize that one. Sorry!".colorize(:light_green)
     mts_step_one(word, name)
   end
 end
 
-#only used once, when a new user uses it for the fist time
+# only used once, when a new user uses it for the fist time
 def new_user_orientation(name)
   puts "This is a text dictionary with simple commands.".colorize(:light_magenta)
   puts "To execute a command, input the command number.".colorize(:light_magenta)
@@ -139,17 +139,17 @@ def new_user_orientation(name)
   puts "Now that you're signed up, we can keep track".colorize(:light_magenta)
   puts "of your favorite words. (limit 5 words)".colorize(:light_magenta)
 
-  puts "1 - Search for a new word".colorize(:light_blue)
+  puts "1 - Search for a new word".colorize(:light_cyan)
   puts "2 - Exit".colorize(:red)
 
   select = gets.chomp
 
   case select
-    when "1"    #Chomp returns a string!!!
+    when "1"    # Chomp returns a string!!!
       # new word search
       puts "Please enter a word to search.".colorize(:light_green)
-      word = gets.chomp                                               #make everything lowercase to avoid search issues ?
-      word_search(word, name) #method that searches the dictionary
+      word = gets.chomp
+      word_search(word, name) # method that searches the dictionary
 
     when "2"
       # exit
