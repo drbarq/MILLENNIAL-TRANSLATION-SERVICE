@@ -15,3 +15,5 @@ gem "require_all", "~> 2.0"
 gem "json", "~> 2.2"
 
 gem "rest-client", "~> 2.0"
+
+gem "pry", "~> 0.12.2"
