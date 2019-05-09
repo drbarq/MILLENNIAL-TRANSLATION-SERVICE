@@ -22,9 +22,9 @@ If you entered a word that we recognize, we will return the definition and give 
 
 ## CONTRIBUTING
 
-Tejas Cousik https://github.com/tcousik
+[Tejas Cousik](https://github.com/tcousik)
 
-Joe Tustin  https://github.com/drbarq
+[Joe Tustin](https://github.com/drbarq)
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
