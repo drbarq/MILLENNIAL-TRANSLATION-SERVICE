@@ -10,7 +10,7 @@ class GetData
     @@data = RestClient::Request.execute(method: :get, url: url+word,               #api request for the data
     headers:{
       "X-RapidAPI-Host" => "mashape-community-urban-dictionary.p.rapidapi.com",
-      "X-RapidAPI-Key" => "063d2b18cfmsh050bcc9a2c51cafp115f0ajsn4ba2d5acb4ff"
+      "X-RapidAPI-Key" => "XX"
     })
 
     @@response = JSON.parse(@@data)
