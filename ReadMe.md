@@ -28,7 +28,7 @@ Joe Tustin  https://github.com/drbarq
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-[Imgur](https://i.imgur.com/VNchlNI.png)
+![alt text](https://i.imgur.com/VNchlNI.png)
 
 [Imgur](https://i.imgur.com/RBg5pKZ.png)
 
