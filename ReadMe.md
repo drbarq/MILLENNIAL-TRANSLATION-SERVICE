@@ -4,20 +4,20 @@ The MTS is a Command Line Interface (CLI) application that translates and define
 
 ## PREREQUISITES & INSTALLATION
 
-The application requires a text editor with ruby functionality and the necessary gems in order to run.
+The application requires a text editor with ruby functionality and the gems that are listed in the Gemfile in order to run.
 
 The gems can be installed by running ‘bundle install’ in your terminal.
 
 The application also requires an API key which can be generated from https://rapidapi.com/community/api/urban-dictionary.
-API Key is placed within getdata.rb replacing the ```XX "X-RapidAPI-Key" => "XX"```
+The API Key that you generate should be placed in double quotes within getdata.rb in the @@data section, following ```X-RapidAPI-Key =>```.
 
 
 ## USAGE
 
-Fork and clone the repository from GitHub at https://github.com/drbarq/mod-one-project.
-Open the folder in a text editor of your choice, then enter ruby config/environment.rb to initiate the translator application.
+Fork and clone the repository from GitHub at https://github.com/drbarq/MILLENNIAL-TRANSLATION-SERVICE.
+Open the project folder in a text editor of your choice, then run ```ruby config/environment.rb``` in your terminal to initiate the translator application.
 Begin by entering your name, then simply follow the directions and input the appropriate command numbers.
-If you entered a word that we recognize, we will return the definition and give you the option to save it to your username.
+If you enter a word that we recognize, we will return the definition and give you the option to save it to your username.
 
 
 ## CONTRIBUTING
