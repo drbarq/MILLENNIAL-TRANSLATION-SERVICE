@@ -7,7 +7,7 @@ The Millennial Translation Service is a Command Line Interface (CLI) application
 The application requires a text editor with ruby functionality. Fork and clone the repository from GitHub at https://github.com/drbarq/MILLENNIAL-TRANSLATION-SERVICE. The required gems are listed in the Gemfile and can be installed by running ```bundle install``` in your terminal.
 
 The application also requires an API key which can be generated from https://rapidapi.com/community/api/urban-dictionary.
-The API Key that you generate should be placed in double quotes within getdata.rb in the ```@@data section```, following ```X-RapidAPI-Key =>```.
+The API Key that you generate should be placed in double quotes within getdata.rb in the ```@@data``` section, following ```X-RapidAPI-Key =>```.
 
 
 ## USAGE
